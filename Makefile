@@ -1,5 +1,5 @@
 run:
-	@go run ./cmd/linalgo/main.go
+	@go run ./cmd/lib/main.go
 
 build:
-	@go build -o ./bin/linalgo ./cmd/linalgo/main.go 
+	@go build -o ./bin/linalgo ./cmd/lib/main.go 
