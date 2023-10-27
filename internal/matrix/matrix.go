@@ -53,6 +53,18 @@ func NewFromString(s string) *Matrix {
 
 // TODO: Construct from file
 
+// Set a spefic value of the Matrix
+func (m *Matrix) Set(r, c int, v float32) error {
+  if  r >= m.Rows || c >= m.Cols {
+    return fmt.Errorf(
+      "illegal access querry of matrix of size %d, %d: %d, %d",
+      m.Rows, m.Cols,
+      r, c,
+    )
+  }
+  m.data[r][c] = v
+  return nil
+}
 // Add a matrix b to the current matrix
 func (m *Matrix) Add(b *Matrix) error {
   if !m.OfSize(b) {

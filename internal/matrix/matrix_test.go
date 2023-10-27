@@ -33,3 +33,16 @@ func TestScaleBy(t *testing.T) {
 		t.Errorf("Matrix Scaling failed")
 	}
 }
+
+func TestSet(t *testing.T) {
+	var value float32 = -69.0
+	r := 1
+	c := 1
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	resMat := NewFromString("1 2 3 ; 4 -69 6 ; 7 8 9")
+	err := mat.Set(r, c, value)
+	if err != nil || !mat.Equals(resMat) {
+		mat.Print()
+		t.Errorf("Matrix Setting Failed: %s", err)
+	}
+}
