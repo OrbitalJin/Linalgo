@@ -13,8 +13,8 @@ Linear algebra library for Go, written in Go
 *   [x] Value Setting
 *   [x] Equality Checking
 *   [x] Transposing
-*   [ ] Dot Product
-*   [ ] Identity
+*   [x] Dot Product
+*   [x] Identity
 *   [ ] Inverse
 *   [ ] Division (A/B = A \* B^-1)
 *   [x] Add tests

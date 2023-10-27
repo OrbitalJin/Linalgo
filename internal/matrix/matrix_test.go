@@ -7,9 +7,9 @@ import (
 func TestSum(t *testing.T) {
 	mat1 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	mat2 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("2 4 6 ; 8 10 12 ; 14 16 18")
+	res := NewFromString("2 4 6 ; 8 10 12 ; 14 16 18")
 	mat1.Add(mat2)
-	if !mat1.Equals(resMat) {
+	if !mat1.Equals(res) {
 		t.Errorf("Matrix addition failed")
 	}
 }
@@ -17,9 +17,9 @@ func TestSum(t *testing.T) {
 func TestSub(t *testing.T) {
 	mat1 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	mat2 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("0 0 0 ; 0 0 0 ; 0 0 0")
+	res := NewFromString("0 0 0 ; 0 0 0 ; 0 0 0")
 	mat1.Sub(mat2)
-	if !mat1.Equals(resMat) {
+	if !mat1.Equals(res) {
 		t.Errorf("Matrix Substraction failed")
 	}
 }
@@ -27,9 +27,9 @@ func TestSub(t *testing.T) {
 func TestScaleBy(t *testing.T) {
 	var scalar float32 = -2.0
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("-2 -4 -6 ; -8 -10 -12 ; -14 -16 -18")
+	res := NewFromString("-2 -4 -6 ; -8 -10 -12 ; -14 -16 -18")
 	mat.ScaleBy(scalar)
-	if !mat.Equals(resMat) {
+	if !mat.Equals(res) {
 		t.Errorf("Matrix Scaling failed")
 	}
 }
@@ -39,9 +39,9 @@ func TestSet(t *testing.T) {
 	r := 1
 	c := 1
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("1 2 3 ; 4 -69 6 ; 7 8 9")
+	res := NewFromString("1 2 3 ; 4 -69 6 ; 7 8 9")
 	err := mat.Set(r, c, value)
-	if err != nil || !mat.Equals(resMat) {
+	if err != nil || !mat.Equals(res) {
 		mat.Print()
 		t.Errorf("Matrix Setting Failed: %s", err)
 	}
@@ -49,18 +49,18 @@ func TestSet(t *testing.T) {
 
 func TestNegate(t *testing.T) {
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("-1 -2 -3 ; -4 -5 -6 ; -7 -8 -9")
+	res := NewFromString("-1 -2 -3 ; -4 -5 -6 ; -7 -8 -9")
 	mat.Negate()
-	if !mat.Equals(resMat) {
+	if !mat.Equals(res) {
 		t.Errorf("Matrix Negation Failed")
 	}
 }
 
 func TestTranspose(t *testing.T) {
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	resMat := NewFromString("1 4 7 ; 2 5 8 ; 3 6 9")
+	res := NewFromString("1 4 7 ; 2 5 8 ; 3 6 9")
 	mat.T()
-	if !mat.Equals(resMat) || mat.Rows != resMat.Rows || mat.Cols != resMat.Cols {
+	if !mat.Equals(res) || mat.Rows != res.Rows || mat.Cols != res.Cols {
 		t.Errorf("Matrix Transposition Failed")
 	}
 }
@@ -68,17 +68,30 @@ func TestTranspose(t *testing.T) {
 func TestDot(t *testing.T) {
 	mat1 := NewFromString("1 2 3 ; 4 5 6")
 	mat2 := NewFromString("-1 -2 ; -3 -4 ; -5 -6")
-	resMat := NewFromString("-22 -28 ; -49 -64")
+	res := NewFromString("-22 -28 ; -49 -64")
 	mat3, err := mat1.Dot(mat2)
-	if !mat3.Equals(resMat) || err != nil {
+	if !mat3.Equals(res) || err != nil {
 		t.Errorf("Matrix Transposition (1) Failed: %s", err)
 	}
 	mat1 = NewFromString("2 1 ; 4 5")
 	mat2 = NewFromString("2 6 1 ; 1 2 3")
-	resMat = NewFromString("5 14 5 ; 13 34 19")
+	res = NewFromString("5 14 5 ; 13 34 19")
 	mat3, err = mat1.Dot(mat2)
-	if !mat3.Equals(resMat) || err != nil {
+	if !mat3.Equals(res) || err != nil {
 		t.Errorf("Matrix Transposition (2) Failed: %s", err)
 	}
 
+}
+
+func TestIdentity(t *testing.T) {
+	I3, err := NewIdentity(3);
+	res := NewFromString("1 0 0 ; 0 1 0 ; 0 0 1")
+	if !I3.Equals(res) || err != nil {
+		t.Errorf("Matrix Identity (1) Failed: %s", err)
+	}
+	I2, err := NewIdentity(2);
+	res = NewFromString("1 0 ; 0 1")
+	if !I2.Equals(res) || err != nil {
+		t.Errorf("Matrix Identity (2) Failed: %s", err)
+	}
 }

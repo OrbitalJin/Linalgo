@@ -27,6 +27,18 @@ func New(r, c int) *Matrix {
   }
 }
 
+// Construct new Identity Matrix
+func NewIdentity(size int) (*Matrix, error) {
+  if size < 2 {
+    return nil, fmt.Errorf("identify matrix must be square >= 2, 2")
+  }
+  m := New(size, size)
+  for i := 0; i < size; i++ {
+    m.data[i][i] = 1
+  }
+  return m, nil
+}
+
 // Construct Matrix from string
 func NewFromString(s string) *Matrix {
   data := make([][]float32, strings.Count(s, ";") + 1)
