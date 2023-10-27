@@ -99,6 +99,13 @@ func (m *Matrix) Sub(b *Matrix) error {
   return nil
 }
 
+// Negate a matrix
+func (m *Matrix) Negate() {
+  m.Transform(func (val float32) float32 {
+    return -val
+  })
+}
+
 // Scale matrix by value
 func (m *Matrix) ScaleBy(s float32) {
   m.Transform(func (val float32) float32 {
