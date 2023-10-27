@@ -84,6 +84,7 @@ func TestDot(t *testing.T) {
 }
 
 func TestIdentity(t *testing.T) {
+	// Sample Tests
 	I3, err := NewIdentity(3);
 	res := NewFromString("1 0 0 ; 0 1 0 ; 0 0 1")
 	if !I3.Equals(res) || err != nil {
@@ -93,5 +94,11 @@ func TestIdentity(t *testing.T) {
 	res = NewFromString("1 0 ; 0 1")
 	if !I2.Equals(res) || err != nil {
 		t.Errorf("Matrix Identity (2) Failed: %s", err)
+	}
+	// Neutral Property
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	res, err = mat.Dot(I3);
+	if !mat.Equals(res) || err != nil {
+		t.Errorf("Matrix Identity (3) Failed: %s", err)
 	}
 }
