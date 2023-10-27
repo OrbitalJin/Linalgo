@@ -13,8 +13,9 @@ Linear algebra library for Go, written in Go
 *   [x] Value Setting
 *   [x] Equality Checking
 *   [x] Transposing
-*   [ ] Identity
 *   [ ] Dot Product
+*   [ ] Identity
+*   [ ] Inverse
 *   [ ] Division (A/B = A \* B^-1)
 *   [x] Add tests
 *   Linear Systems

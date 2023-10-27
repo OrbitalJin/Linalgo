@@ -99,6 +99,28 @@ func (m *Matrix) Sub(b *Matrix) error {
   return nil
 }
 
+// Dot Product
+func (m *Matrix) Dot(b *Matrix) (*Matrix, error) {
+  if m.Cols != b.Rows {
+    return nil, fmt.Errorf(
+      "size mismatch, cannot apply dot product between Matrices of dimension %d, %d and %d, %d",
+      m.Rows, m.Cols,
+      b.Rows, b.Cols,
+    )
+  }
+  result := New(m.Rows, b.Cols)
+  for r := 0; r < result.Rows; r++ {
+    for c := 0; c < result.Cols; c++ {
+      var val float32 = 0.0
+      for n := 0; n < m.Cols; n++ {
+        val += m.data[r][n] * b.data[n][c]
+      }
+      result.data[r][c] = val
+    }
+  }
+  return result, nil
+}
+
 // Transpose Matrix
 func (m *Matrix) T() *Matrix{
   newMat := New(m.Cols, m.Rows)

@@ -64,3 +64,21 @@ func TestTranspose(t *testing.T) {
 		t.Errorf("Matrix Transposition Failed")
 	}
 }
+
+func TestDot(t *testing.T) {
+	mat1 := NewFromString("1 2 3 ; 4 5 6")
+	mat2 := NewFromString("-1 -2 ; -3 -4 ; -5 -6")
+	resMat := NewFromString("-22 -28 ; -49 -64")
+	mat3, err := mat1.Dot(mat2)
+	if !mat3.Equals(resMat) || err != nil {
+		t.Errorf("Matrix Transposition (1) Failed: %s", err)
+	}
+	mat1 = NewFromString("2 1 ; 4 5")
+	mat2 = NewFromString("2 6 1 ; 1 2 3")
+	resMat = NewFromString("5 14 5 ; 13 34 19")
+	mat3, err = mat1.Dot(mat2)
+	if !mat3.Equals(resMat) || err != nil {
+		t.Errorf("Matrix Transposition (2) Failed: %s", err)
+	}
+
+}
