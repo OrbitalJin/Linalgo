@@ -99,27 +99,45 @@ func (m *Matrix) Sub(b *Matrix) error {
   return nil
 }
 
+// Transpose Matrix
+func (m *Matrix) T() *Matrix{
+  newMat := New(m.Cols, m.Rows)
+  for r := 0; r < m.Rows; r++ {
+    for c := 0; c < m.Cols; c++ {
+      newMat.data[c][r] = m.data[r][c]
+    }
+  }
+  m.data = newMat.data
+  m.Rows = newMat.Rows
+  m.Cols = newMat.Cols
+  newMat = nil
+  return m
+}
+
 // Negate a matrix
-func (m *Matrix) Negate() {
+func (m *Matrix) Negate() *Matrix{
   m.Transform(func (val float32) float32 {
     return -val
   })
+  return m
 }
 
 // Scale matrix by value
-func (m *Matrix) ScaleBy(s float32) {
+func (m *Matrix) ScaleBy(s float32) *Matrix{
   m.Transform(func (val float32) float32 {
     return val * s
   })
+  return m
 }
 
 // Apply a specific function to every element of the Matrix
-func (m *Matrix) Transform(f types.Transformer) {
+func (m *Matrix) Transform(f types.Transformer) *Matrix{
   for r := 0; r < m.Rows; r++ {
     for c := 0; c < m.Cols; c++ {
       m.data[r][c] = f(m.data[r][c])
     } 
   }
+  return m
 }
 
 // Checks whether the two matrices are of the same dimensions

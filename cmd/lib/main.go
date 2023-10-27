@@ -10,6 +10,8 @@ func main() {
   
   m1.Print();
   m2.Print();
-  m1.Add(m2);
+  m1.Sub(m2);
+  m1.Print();
+  m1.T()
   m1.Print();
 }

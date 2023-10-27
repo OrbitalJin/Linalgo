@@ -55,3 +55,12 @@ func TestNegate(t *testing.T) {
 		t.Errorf("Matrix Negation Failed")
 	}
 }
+
+func TestTranspose(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	resMat := NewFromString("1 4 7 ; 2 5 8 ; 3 6 9")
+	mat.T()
+	if !mat.Equals(resMat) || mat.Rows != resMat.Rows || mat.Cols != resMat.Cols {
+		t.Errorf("Matrix Transposition Failed")
+	}
+}
