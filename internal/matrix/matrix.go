@@ -53,7 +53,7 @@ func NewFromString(s string) *Matrix {
 
 // Add a matrix b to the current matrix
 func (m *Matrix) Add(b *Matrix) error {
-  if m.Rows != b.Rows || m.Cols != b.Cols {
+  if !m.OfSize(b) {
     return fmt.Errorf(
       "size mismatch, cannot add matrix %d, %d to matrix %d, %d",
       b.Rows, b.Cols,
@@ -70,7 +70,7 @@ func (m *Matrix) Add(b *Matrix) error {
 
 // Substract a matrix from the current matrix
 func (m *Matrix) Sub(b *Matrix) error {
-  if m.Rows != b.Rows || m.Cols != b.Cols {
+  if !m.OfSize(b) {
     return fmt.Errorf(
       "size mismatch, cannot substract matrix %d, %d from matrix %d, %d",
       b.Rows, b.Cols,
@@ -83,6 +83,26 @@ func (m *Matrix) Sub(b *Matrix) error {
     } 
   }
   return nil
+}
+
+// Checks whether the two matrices are of the same dimensions
+func (m *Matrix) OfSize(b *Matrix) bool {
+  return m.Rows == b.Rows && m.Cols == b.Cols
+}
+
+// Check whetehr two matrices are equal i.e. a[i][j] == b[i][j]
+func (m *Matrix) Equals(b *Matrix) bool {
+  if !m.OfSize(b) {
+    return false
+  }
+  for r := 0; r < m.Rows; r++ {
+    for c := 0; c < m.Cols; c++ {
+      if m.data[r][c] != b.data[r][c] {
+        return false
+      }
+    } 
+  }
+  return true
 }
 
 // Print the content of the matrix
