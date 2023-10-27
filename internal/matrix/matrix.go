@@ -9,14 +9,14 @@ import (
 type Matrix struct {
   Rows int
   Cols int
-  data [][]int
+  data [][]float64
 }
 
 // Construct empty Matrix of size r, c
 func New(r, c int) *Matrix {
-  data := make([][]int, r)
+  data := make([][]float64, r)
   for i := range data {
-    data[i] = make([]int, c)
+    data[i] = make([]float64, c)
   }
   return &Matrix {
     Rows: r,
@@ -27,18 +27,18 @@ func New(r, c int) *Matrix {
 
 // Construct Matrix from string
 func NewFromString(s string) *Matrix {
-  data := make([][]int, strings.Count(s, ";") + 1)
+  data := make([][]float64, strings.Count(s, ";") + 1)
   rows := strings.Split(s, ";")
   for i, n := range rows {
     values := strings.Fields(n)
-    row := make([]int, len(values))
+    row := make([]float64, len(values))
 
     for j, value := range values {
       value, err := strconv.Atoi(value)
       if err != nil {
         panic(err)
       }
-      row[j] = value
+      row[j] = float64(value)
     }
     data[i] = row
   }
@@ -83,6 +83,15 @@ func (m *Matrix) Sub(b *Matrix) error {
     } 
   }
   return nil
+}
+
+// Scale matrix by value
+func (m *Matrix) ScaleBy(s float64) {
+  for r := 0; r < m.Rows; r++ {
+    for c := 0; c < m.Cols; c++ {
+      m.data[r][c] *= s
+    } 
+  }
 }
 
 // Checks whether the two matrices are of the same dimensions
