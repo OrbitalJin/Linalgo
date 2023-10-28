@@ -1,6 +1,8 @@
 package types
 
-type Transformer func(float32) float32
+type MatrixType float32
+
+type Transformer func(MatrixType) MatrixType
 
 type Shape struct {
 	Rows int

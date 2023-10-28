@@ -27,7 +27,7 @@ func TestSub(t *testing.T) {
 }
 
 func TestScaleBy(t *testing.T) {
-	var scalar float32 = -2.0
+	var scalar types.MatrixType = -2.0
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	res := NewFromString("-2 -4 -6 ; -8 -10 -12 ; -14 -16 -18")
 	mat.ScaleBy(scalar)
@@ -37,12 +37,12 @@ func TestScaleBy(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	var value float32 = -69.0
+	var value types.MatrixType = -69.0
 	r := 1
 	c := 1
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	res := NewFromString("1 2 3 ; 4 -69 6 ; 7 8 9")
-	err := mat.Set(r, c, value)
+	err := mat.Set(types.Pos{Row: r, Col: c}, value)
 	if err != nil || !mat.Equals(res) {
 		mat.Print()
 		t.Errorf("Matrix Setting Failed: %s", err)
@@ -119,17 +119,25 @@ func TestSubMatrix(t *testing.T) {
 }
 
 func TestDet(t *testing.T) {
-	var res float32 = -2
+	// 2x2
+	var res types.MatrixType = -2
 	mat := NewFromString("1 2 ; 3 4")
 	det, err := mat.Det()
-	if det != res || err != nil {
+	if err != nil || det != res {
 		t.Errorf("Matrix determinant (1) Failed: %s", err)
 	}
 
 	res = -14
 	mat = NewFromString("3 8 ; 4 6")
 	det, err = mat.Det()
-	if det != res || err != nil {
+	if err != nil || det != res {
 		t.Errorf("Matrix determinant (2) Failed: %s", err)
+	}
+	// 3x3
+	res = -306
+	mat = NewFromString("6 1 1 ; 4 -2 5 ; 2 8 7")
+	det, err = mat.Det()
+	if err != nil || det != res {
+		t.Errorf("Matrix determinant (3) Failed: %s", err)
 	}
 }
