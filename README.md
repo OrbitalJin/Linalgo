@@ -15,7 +15,8 @@ Linear algebra library for Go, written in Go
 *   [x] Transposing
 *   [x] Dot Product
 *   [x] Identity
-*   [ ] Determinant
+*   [x] SubMatrix
+*   [ ] Determinant (Requires SubMatrix)
 *   [ ] Inverse (Requires Determinant)
 *   [ ] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Add tests

@@ -111,6 +111,34 @@ func (m *Matrix) Sub(b *Matrix) error {
   return nil
 }
 
+// Create a new SubMatrix
+func (m *Matrix) SubMatrix(start, end types.Pos) (*Matrix, error) {
+  if !m.InBound(start) {
+    return nil, fmt.Errorf(
+      "illegal access querry start of matrix of size %d, %d: %d, %d",
+      m.Rows, m.Cols,
+      start.Row, start.Col,
+    )
+  }
+  if !m.InBound(end) {
+    return nil, fmt.Errorf(
+      "illegal access querry end of matrix of size %d, %d: %d, %d",
+      m.Rows, m.Cols,
+      end.Row, end.Col,
+    )
+  }
+  r := end.Row - start.Row + 1
+  c := end.Col - start.Col + 1
+  sub := New(r, c)
+  for i := 0; i < r; i++ {
+    for j := 0; j < c; j++ {
+      sub.data[i][j] = m.data[i + start.Row][j + start.Col]
+    }
+  }
+
+  return sub, nil
+}
+
 // Compute the determinant of the matrix is applicable
 func (m *Matrix) Det() (float32, error) {
   if !m.IsSquare() {
@@ -197,6 +225,11 @@ func (m *Matrix) Shape() types.Shape {
     Rows: m.Rows,
     Cols: m.Cols,
   }
+}
+
+// Check whether a position is within range of the matrix
+func (m *Matrix) InBound(p types.Pos) bool {
+  return p.Row >= 0 && p.Row < m.Rows && p.Col >= 0 && p.Col < m.Cols
 }
 
 // Checks whether a matrix is square
