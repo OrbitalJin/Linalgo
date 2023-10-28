@@ -102,3 +102,26 @@ func TestIdentity(t *testing.T) {
 		t.Errorf("Matrix Identity (3) Failed: %s", err)
 	}
 }
+
+func TestDet(t *testing.T) {
+	var res float32 = -2
+	mat := NewFromString("1 2 ; 3 4")
+	det, err := mat.Det()
+	if det != res || err != nil {
+		t.Errorf("Matrix determinant (1) Failed: %s", err)
+	}
+
+	res = -14
+	mat = NewFromString("3 8 ; 4 6")
+	det, err = mat.Det()
+	if det != res || err != nil {
+		t.Errorf("Matrix determinant (2) Failed: %s", err)
+	}
+
+	// res = -2
+	// mat = NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	// det, err = mat.Det()
+	// if det != res || err != nil {
+	// 	t.Errorf("Matrix determinant (3) Failed: %s", err)
+	// }
+}

@@ -111,6 +111,23 @@ func (m *Matrix) Sub(b *Matrix) error {
   return nil
 }
 
+// Compute the determinant of the matrix is applicable
+func (m *Matrix) Det() (float32, error) {
+  if !m.IsSquare() {
+    return 0, fmt.Errorf(
+      "incompatible shape (%d, %d), matrix must be square to compute it's determinat",
+      m.Rows, m.Cols,
+    )
+  }
+  if m.Rows == 2 && m.Cols == 2 {
+    return (m.data[0][0] * m.data[1][1] - m.data[0][1] * m.data[1][0]), nil
+  }
+  return 0, fmt.Errorf(
+    "[NOT IMPLEMENTED YET] matrix must be 2x2 to compute it's determinant, got %dx%d",
+    m.Rows, m.Cols,
+  )
+}
+
 // Dot Product
 func (m *Matrix) Dot(b *Matrix) (*Matrix, error) {
   if m.Cols != b.Rows {
@@ -172,6 +189,19 @@ func (m *Matrix) Transform(f types.Transformer) *Matrix{
     } 
   }
   return m
+}
+
+// Returns the shape of the matrix i.e. r, c
+func (m *Matrix) Shape() types.Shape {
+  return types.Shape{
+    Rows: m.Rows,
+    Cols: m.Cols,
+  }
+}
+
+// Checks whether a matrix is square
+func (m *Matrix) IsSquare() bool {
+  return m.Rows == m.Cols
 }
 
 // Checks whether the two matrices are of the same dimensions
