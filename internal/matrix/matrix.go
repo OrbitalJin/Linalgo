@@ -123,7 +123,7 @@ func (m *Matrix) SubMatrix(start, end t.Pos) (*Matrix, error) {
 func (m *Matrix) Det() (t.MatrixType, error) {
   if !m.IsSquare() {
     return 0, fmt.Errorf(
-      "incompatible shape (%d, %d), matrix must be square to compute it's determinat",
+      "incompatible shape (%d, %d), matrix must be square to compute it's determinant",
       m.Rows, m.Cols,
     )
   }
@@ -131,14 +131,28 @@ func (m *Matrix) Det() (t.MatrixType, error) {
 }
 
 // Returns the cofactor at the given position
-func (m *Matrix) Cofactor(p t.Pos) t.MatrixType {
+func (m *Matrix) Cofactor(p t.Pos) (t.MatrixType, error) {
+  if !m.IsSquare() {
+    return 0, fmt.Errorf(
+      "incompatible shape (%d, %d), matrix must be square to compute a cofactor",
+      m.Rows, m.Cols,
+    )
+  }
+
   sign := t.MatrixType(math.Pow(-1, float64(p.Row + p.Col)))
-  minor := m.Minor(p)
-  return sign * minor
+  minor, _ := m.Minor(p)
+  return sign * minor, nil
 }
 
 // Returns the Minor at the given position
-func (m *Matrix) Minor(p t.Pos) t.MatrixType {
+func (m *Matrix) Minor(p t.Pos) (t.MatrixType, error) {
+  if !m.IsSquare() {
+    return 0, fmt.Errorf(
+      "incompatible shape (%d, %d), matrix must be square to compute a minor",
+      m.Rows, m.Cols,
+    )
+  }
+
   subMatrix := New(m.Rows - 1, m.Cols - 1)
   subRow := 0
   for r := 0; r < m.Rows; r++ {
@@ -151,8 +165,7 @@ func (m *Matrix) Minor(p t.Pos) t.MatrixType {
     }
     subRow++
   }
-  subMatrix.Print()
-  return det(subMatrix)
+  return det(subMatrix), nil
 }
 
 // Returns the shape of the matrix i.e. r, c

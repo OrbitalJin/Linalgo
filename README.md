@@ -19,7 +19,7 @@ Linear algebra library for Go, written in Go
 *   [x] Determinant (Requires SubMatrix)
 *   [x] Minor
 *   [x] Cofactors (Requires Minor)
-*   [ ] Adjugate (Requires Cofactors)
+*   [x] Adjugate (Requires Cofactors)
 *   [ ] Inverse (Requires Determinant)
 *   [ ] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Add tests

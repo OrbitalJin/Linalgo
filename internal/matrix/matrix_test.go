@@ -165,30 +165,45 @@ func TestDet(t *testing.T) {
 func TestCofactor(t *testing.T) {
 	var ans types.MatrixType = -3
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	cof := mat.Cofactor(types.Pos{Row: 0, Col: 0})
-	if cof != ans {
+	cof, err := mat.Cofactor(types.Pos{Row: 0, Col: 0})
+	if err != nil || cof != ans {
 		fmt.Println(cof)
-		t.Errorf("Matrix cofactor (1) Failed: Expected %f got %f", ans, cof)
+		t.Errorf("Matrix cofactor (1) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = 6
-	cof = mat.Cofactor(types.Pos{Row: 0, Col: 1})
-	if cof != ans {
-		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f", ans, cof)
+	cof, err = mat.Cofactor(types.Pos{Row: 0, Col: 1})
+	if err != nil || cof != ans {
+		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = -3
-	cof = mat.Cofactor(types.Pos{Row: 0, Col: 2})
-	if cof != ans {
-		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f", ans, cof)
+	cof, err = mat.Cofactor(types.Pos{Row: 0, Col: 2})
+	if err != nil || cof != ans {
+		t.Errorf("Matrix cofactor (3) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = 6
-	cof = mat.Cofactor(types.Pos{Row: 1, Col: 0})
-	if cof != ans {
-		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f", ans, cof)
+	cof, err = mat.Cofactor(types.Pos{Row: 1, Col: 0})
+	if err != nil || cof != ans {
+		t.Errorf("Matrix cofactor (4) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = -3
-	cof = mat.Cofactor(types.Pos{Row: 2, Col: 0})
-	if cof != ans {
-		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f", ans, cof)
+	cof, err = mat.Cofactor(types.Pos{Row: 2, Col: 0})
+	if err != nil || cof != ans {
+		t.Errorf("Matrix cofactor (5) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
+}
+
+func TestAdjugate(t *testing.T) {
+	mat := NewFromString("3 2 7 ; 5 -1 -3 ; 4 2 9")
+	ans := NewFromString("-3 -4 1 ; -57 -1 44 ; 14 2 -13")
+	adj, err := mat.Adj()
+	if err != nil || !ans.Equals(adj) {
+		t.Errorf("Matrix adjugate (1) Failed: %s", err)
+	} 
+	mat = NewFromString("-1 2 1 ; 3 -1 -3 ; 6 2 -2")
+	ans = NewFromString("8 6 -5 ; -12 -4 0 ; 12 14 -5")
+	adj, err = mat.Adj()
+	if err != nil || !ans.Equals(adj) {
+		t.Errorf("Matrix adjugate (2) Failed: %s", err)
+	} 
 
 }
