@@ -1,4 +1,4 @@
-# LinAlGo
+# Linalgo
 
 Linear algebra library for Go, written in Go
 
@@ -16,7 +16,7 @@ Linear algebra library for Go, written in Go
 *   [x] Dot Product
 *   [x] Identity
 *   [x] SubMatrix
-*   [ ] Determinant (Requires SubMatrix)
+*   [x] Determinant (Requires SubMatrix)
 *   [ ] Inverse (Requires Determinant)
 *   [ ] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Add tests

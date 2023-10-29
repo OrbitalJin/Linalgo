@@ -1,6 +1,7 @@
 package matrix
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/OrbitalJin/Linalgo/types"
@@ -138,6 +139,27 @@ func TestDet(t *testing.T) {
 	mat = NewFromString("6 1 1 ; 4 -2 5 ; 2 8 7")
 	det, err = mat.Det()
 	if err != nil || det != res {
+		fmt.Println(det)
+		mat.Print()
 		t.Errorf("Matrix determinant (3) Failed: %s", err)
+	}
+	// Upper Triangular
+	res = -12
+	mat = NewFromString("6 1 1 ; 0 -2 5 ; 0 0 1")
+	det, err = mat.Det()
+	if err != nil || det != res {
+		mat.Print()
+		fmt.Println(det)
+		t.Errorf("Matrix determinant (3) Failed: %s", err)
+	}
+
+	// 4x4
+	res = 0
+	mat = NewFromString("1 2 3 4 ; 5 6 7 8 ; 9 10 11 12 ; 13 14 15 16")
+	det, err = mat.Det()
+	if err != nil || det != res {
+		mat.Print()
+		fmt.Println(det)
+		t.Errorf("Matrix determinant (4) Failed: %s", err)
 	}
 }
