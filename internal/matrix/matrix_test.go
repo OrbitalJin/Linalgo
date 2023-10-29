@@ -217,4 +217,11 @@ func TestInverse(t *testing.T) {
 		t.Errorf("Matrix Inverse (1) Failed: %s", err)
 		inv.Print()
 	}
+	// This should yield that the inverse doesn't exist because the determinant = 0
+	mat = NewFromString("1 2 3 4 ; 5 6 7 8 ; 9 10 11 12 ; 13 14 15 16")
+	_, err = mat.Inverse()
+	if err == nil {
+		t.Errorf("Matrix Inverse (2) Failed: %s", err)
+	}
+	
 }
