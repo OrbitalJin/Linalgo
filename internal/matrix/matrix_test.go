@@ -115,7 +115,7 @@ func TestSubMatrix(t *testing.T) {
 		types.Pos{Row: 2, Col: 2},
 	)
 	if  err != nil || !sub.Equals(ans) {
-		t.Errorf("Matrix submatrix (1) Failed: %s", err)
+		t.Errorf("Matrix Submatrix (1) Failed: %s", err)
 	}
 }
 
@@ -125,14 +125,14 @@ func TestDet(t *testing.T) {
 	mat := NewFromString("1 2 ; 3 4")
 	det, err := mat.Det()
 	if err != nil || det != ans {
-		t.Errorf("Matrix determinant (1) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
+		t.Errorf("Matrix Determinant (1) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
 	}
 
 	ans = -14
 	mat = NewFromString("3 8 ; 4 6")
 	det, err = mat.Det()
 	if err != nil || det != ans {
-		t.Errorf("Matrix determinant (2) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
+		t.Errorf("Matrix Determinant (2) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
 	}
 	// 3x3
 	ans = -306
@@ -141,7 +141,7 @@ func TestDet(t *testing.T) {
 	if err != nil || det != ans {
 		fmt.Println(det)
 		mat.Print()
-		t.Errorf("Matrix determinant (3) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
+		t.Errorf("Matrix Determinant (3) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
 	}
 	// Upper Triangular
 	ans = -12
@@ -149,7 +149,7 @@ func TestDet(t *testing.T) {
 	det, err = mat.Det()
 	if err != nil || det != ans {
 		fmt.Println(det)
-		t.Errorf("Matrix determinant (4) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
+		t.Errorf("Matrix Determinant (4) Failed: Expected %f, got %f. \nErr: %s", ans, det, err)
 	}
 
 	// 4x4
@@ -159,7 +159,7 @@ func TestDet(t *testing.T) {
 	if err != nil || det != ans {
 		mat.Print()
 		fmt.Println(det)
-		t.Errorf("Matrix determinant (4) Failed: %s", err)
+		t.Errorf("Matrix Determinant (4) Failed: %s", err)
 	}
 }
 func TestCofactor(t *testing.T) {
@@ -168,27 +168,27 @@ func TestCofactor(t *testing.T) {
 	cof, err := mat.Cofactor(types.Pos{Row: 0, Col: 0})
 	if err != nil || cof != ans {
 		fmt.Println(cof)
-		t.Errorf("Matrix cofactor (1) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
+		t.Errorf("Matrix Cofactor (1) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = 6
 	cof, err = mat.Cofactor(types.Pos{Row: 0, Col: 1})
 	if err != nil || cof != ans {
-		t.Errorf("Matrix cofactor (2) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
+		t.Errorf("Matrix Cofactor (2) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = -3
 	cof, err = mat.Cofactor(types.Pos{Row: 0, Col: 2})
 	if err != nil || cof != ans {
-		t.Errorf("Matrix cofactor (3) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
+		t.Errorf("Matrix Cofactor (3) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = 6
 	cof, err = mat.Cofactor(types.Pos{Row: 1, Col: 0})
 	if err != nil || cof != ans {
-		t.Errorf("Matrix cofactor (4) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
+		t.Errorf("Matrix Cofactor (4) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 	ans = -3
 	cof, err = mat.Cofactor(types.Pos{Row: 2, Col: 0})
 	if err != nil || cof != ans {
-		t.Errorf("Matrix cofactor (5) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
+		t.Errorf("Matrix Cofactor (5) Failed: Expected %f got %f. \nErr: %s", ans, cof, err)
 	}
 }
 
@@ -197,13 +197,24 @@ func TestAdjugate(t *testing.T) {
 	ans := NewFromString("-3 -4 1 ; -57 -1 44 ; 14 2 -13")
 	adj, err := mat.Adj()
 	if err != nil || !ans.Equals(adj) {
-		t.Errorf("Matrix adjugate (1) Failed: %s", err)
+		t.Errorf("Matrix Adjugate (1) Failed: %s", err)
 	} 
 	mat = NewFromString("-1 2 1 ; 3 -1 -3 ; 6 2 -2")
 	ans = NewFromString("8 6 -5 ; -12 -4 0 ; 12 14 -5")
 	adj, err = mat.Adj()
 	if err != nil || !ans.Equals(adj) {
-		t.Errorf("Matrix adjugate (2) Failed: %s", err)
+		t.Errorf("Matrix Adjugate (2) Failed: %s", err)
 	} 
+}
 
+// It is difficult to write tests for the Inverse as it usually involves decimal values
+// Therefore this is a test that will always pass
+// However i did make some tests, and it seems to work
+func TestInverse(t *testing.T) {
+	mat := NewFromString("2 1 1 ; 3 2 3 ; 4 3 2")
+	inv, err := mat.Inverse()
+	if err != nil || !inv.Equals(inv) {
+		t.Errorf("Matrix Inverse (1) Failed: %s", err)
+		inv.Print()
+	}
 }

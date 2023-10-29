@@ -6,13 +6,25 @@ import (
 	t "github.com/OrbitalJin/Linalgo/types"
 )
 
+// Inverse of a Matrix
+func (m *Matrix) Inverse() (*Matrix, error) {
+  if !m.IsSquare() {
+    return nil, squareError(m.Shape(), "Inverse")
+  }
+  det, err := m.Det()
+  if err != nil { return nil, err }
+  if det == 0 {
+    return nil, fmt.Errorf("Matrix is singular (non-invertible), determinant is zero")
+  }
+  adj, err := m.Adj()
+  if err != nil { return nil, err }
+  return adj.ScaleBy(t.MatrixType(1/det)), nil
+}
+
 // Adjoint of a Matrix (Matrix of det)
 func (m *Matrix) Adj() (*Matrix, error) {
   if !m.IsSquare() {
-    return nil, fmt.Errorf(
-      "incompatible shape (%d, %d), matrix must be square to compute it's determinat",
-      m.Rows, m.Cols,
-    )
+    return nil, squareError(m.Shape(), "Adjugate")
   }
 
   newMat := New(m.Cols, m.Rows)
@@ -28,8 +40,6 @@ func (m *Matrix) Adj() (*Matrix, error) {
   }
   return newMat.T(), nil
 }
-
-
 
 // Transpose Matrix
 func (m *Matrix) T() *Matrix{

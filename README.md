@@ -20,7 +20,7 @@ Linear algebra library for Go, written in Go
 *   [x] Minor
 *   [x] Cofactors (Requires Minor)
 *   [x] Adjugate (Requires Cofactors)
-*   [ ] Inverse (Requires Determinant)
+*   [x] Inverse (Requires Determinant)
 *   [ ] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Add tests
 *   Linear Systems
