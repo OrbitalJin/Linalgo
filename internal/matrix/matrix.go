@@ -2,6 +2,7 @@ package matrix
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 
@@ -127,6 +128,31 @@ func (m *Matrix) Det() (t.MatrixType, error) {
     )
   }
   return det(m), nil
+}
+
+// Returns the cofactor at the given position
+func (m *Matrix) Cofactor(p t.Pos) t.MatrixType {
+  sign := t.MatrixType(math.Pow(-1, float64(p.Row + p.Col)))
+  minor := m.Minor(p)
+  return sign * minor
+}
+
+// Returns the Minor at the given position
+func (m *Matrix) Minor(p t.Pos) t.MatrixType {
+  subMatrix := New(m.Rows - 1, m.Cols - 1)
+  subRow := 0
+  for r := 0; r < m.Rows; r++ {
+    if r == p.Row { continue }
+    subCol := 0
+    for c := 0; c < m.Cols; c++ {
+      if c == p.Col { continue }
+      subMatrix.Set(t.Pos{Row: subRow, Col: subCol}, m.data[r][c])
+      subCol++
+    }
+    subRow++
+  }
+  subMatrix.Print()
+  return det(subMatrix)
 }
 
 // Returns the shape of the matrix i.e. r, c
