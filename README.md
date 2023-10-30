@@ -2,6 +2,15 @@
 
 Linear algebra library for Go, written in Go
 
+run test suite:
+```bash 
+make test
+```
+build library:
+```bash
+make build
+```
+
 ## Features
 
 -   Matrices
@@ -21,6 +30,7 @@ Linear algebra library for Go, written in Go
 *   [x] Cofactors (Requires Minor)
 *   [x] Adjugate (Requires Cofactors)
 *   [x] Inverse (Requires Determinant)
-*   [ ] Division (A/B = A \* B^-1) (Requires Inverse)
+*   [x] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Add tests
+*   [ ] Add benchmarks
 *   Linear Systems

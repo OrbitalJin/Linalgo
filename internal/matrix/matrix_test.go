@@ -88,24 +88,23 @@ func TestDot(t *testing.T) {
 
 func TestIdentity(t *testing.T) {
 	// Sample Tests
-	I3, err := NewIdentity(3);
+	I3, err := NewIdentity(3)
 	ans := NewFromString("1 0 0 ; 0 1 0 ; 0 0 1")
 	if !I3.Equals(ans) || err != nil {
 		t.Errorf("Matrix Identity (1) Failed: %s", err)
 	}
-	I2, err := NewIdentity(2);
+	I2, err := NewIdentity(2)
 	ans = NewFromString("1 0 ; 0 1")
-	if err != nil || !I2.Equals(ans)  {
+	if err != nil || !I2.Equals(ans) {
 		t.Errorf("Matrix Identity (2) Failed: %s", err)
 	}
 	// Neutral Property
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-	ans, err = mat.Dot(I3);
-	if  err != nil || !mat.Equals(ans) {
+	ans, err = mat.Dot(I3)
+	if err != nil || !mat.Equals(ans) {
 		t.Errorf("Matrix Identity (3) Failed: %s", err)
 	}
 }
-
 
 func TestSubMatrix(t *testing.T) {
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
@@ -114,7 +113,7 @@ func TestSubMatrix(t *testing.T) {
 		types.Pos{Row: 1, Col: 1},
 		types.Pos{Row: 2, Col: 2},
 	)
-	if  err != nil || !sub.Equals(ans) {
+	if err != nil || !sub.Equals(ans) {
 		t.Errorf("Matrix Submatrix (1) Failed: %s", err)
 	}
 }
@@ -161,6 +160,15 @@ func TestDet(t *testing.T) {
 		fmt.Println(det)
 		t.Errorf("Matrix Determinant (4) Failed: %s", err)
 	}
+	// 4x4 null
+	ans = 0
+	mat = NewFromString("0 0 0 0 ; 0 0 0 0 ; 0 0 0 0; 0 0 0 0")
+	det, err = mat.Det()
+	if err != nil || det != ans {
+		mat.Print()
+		fmt.Println(det)
+		t.Errorf("Matrix Determinant (5) Failed: %s", err)
+	}
 }
 func TestCofactor(t *testing.T) {
 	var ans types.MatrixType = -3
@@ -198,30 +206,60 @@ func TestAdjugate(t *testing.T) {
 	adj, err := mat.Adj()
 	if err != nil || !ans.Equals(adj) {
 		t.Errorf("Matrix Adjugate (1) Failed: %s", err)
-	} 
+	}
 	mat = NewFromString("-1 2 1 ; 3 -1 -3 ; 6 2 -2")
 	ans = NewFromString("8 6 -5 ; -12 -4 0 ; 12 14 -5")
 	adj, err = mat.Adj()
 	if err != nil || !ans.Equals(adj) {
 		t.Errorf("Matrix Adjugate (2) Failed: %s", err)
-	} 
+	}
 }
 
 // It is difficult to write tests for the Inverse as it usually involves decimal values
 // Therefore this is a test that will always pass
 // However i did make some tests, and it seems to work
 func TestInverse(t *testing.T) {
-	mat := NewFromString("2 1 1 ; 3 2 3 ; 4 3 2")
+	// 2x2
+	mat := NewFromString("1 2 ; 3 4")
 	inv, err := mat.Inverse()
 	if err != nil || !inv.Equals(inv) {
 		t.Errorf("Matrix Inverse (1) Failed: %s", err)
+		inv.Print()
+	}
+
+	// 3x3
+	mat = NewFromString("2 1 1 ; 3 2 3 ; 4 3 2")
+	inv, err = mat.Inverse()
+	if err != nil || !inv.Equals(inv) {
+		t.Errorf("Matrix Inverse (2) Failed: %s", err)
 		inv.Print()
 	}
 	// This should yield that the inverse doesn't exist because the determinant = 0
 	mat = NewFromString("1 2 3 4 ; 5 6 7 8 ; 9 10 11 12 ; 13 14 15 16")
 	_, err = mat.Inverse()
 	if err == nil {
-		t.Errorf("Matrix Inverse (2) Failed: %s", err)
+		t.Errorf("Matrix Inverse (3) Failed: %s", err)
 	}
-	
+}
+
+func TestDiv(t *testing.T) {
+	// 2x2 / 2x2
+	mat1 := NewFromString("1 2 ; 3 4")
+	mat2 := NewFromString("4 3 ; 2 1")
+	ans := NewFromString("1.5 -2.5 ; 2.5 -3.5")
+	res, err := mat1.Div(mat2)
+	if err != nil || !res.Equals(ans) {
+		res.Print()
+		t.Errorf("Matrix Division (1) Failed: %s", err)
+	}
+	// 3x2 / 2x2
+	mat1 = NewFromString("1 2 ; 3 4 ; 2 6")
+	mat2 = NewFromString("-1 -2 ; -3 -4")
+	ans = NewFromString("-1 0 ; 0 -1 ; -5 1")
+	res, err = mat1.Div(mat2)
+	if err != nil || !res.Equals(ans) {
+		res.Print()
+		t.Errorf("Matrix Division (2) Failed: %s", err)
+	}
+
 }
