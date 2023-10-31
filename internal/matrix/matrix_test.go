@@ -277,3 +277,37 @@ func TestSwapRows(t *testing.T) {
     t.Errorf("Matrix Row Swapping (2) Failed: %s", err)
   }
 }
+
+// Scale Row
+func TestScaleRow(t *testing.T) {
+  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+  ans := NewFromString("2 4 6 ; 4 5 6 ; 7 8 9")
+  _, err := mat.ScaleRowBy(0, 2)
+  if err != nil || !mat.Equals(ans) {
+    t.Errorf("Matrix Row Scaling (1) Failed: %s", err)
+  }
+  // Out of bounds
+  _, err = mat.ScaleRowBy(10, 5)
+  if err == nil {
+    t.Errorf("Matrix Row Scaling (2) Failed: %s", err)
+  }
+}
+
+// Test Row Reduction
+func TestRREF(t *testing.T) {
+  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+  ans := NewFromString("1 0 -1 ; 0 1 2 ; 0 0 0")
+  _, err := mat.RREF()
+  if err != nil || !mat.Equals(ans) {
+    t.Errorf("Matrix RREF (1) Failed: %s", err)
+    mat.Print()
+  }
+  // 4x4
+  mat = NewFromString("1 2 -1 -4 ; 2 3 -1 -11 ; -2 0 -3 22")
+  ans = NewFromString("1 0 0 -8 ; 0 1 0 1 ; 0 0 1 -2")
+  _, err = mat.RREF()
+  if err != nil || !mat.Equals(ans) {
+    t.Errorf("Matrix RREF (2) Failed: %s", err)
+    mat.Print()
+  }
+}

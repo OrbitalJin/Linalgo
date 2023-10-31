@@ -32,7 +32,8 @@ make build
 *   [x] Inverse (Requires Determinant)
 *   [x] Division (A/B = A \* B^-1) (Requires Inverse)
 *   [x] Row Swapping 
-*   [ ] Row Reduction Echelon Form (RREF) (Requires Row Swapping)
+*   [x] Row Transforation 
+*   [x] Row Reduction Echelon Form (RREF) (Requires Row Swapping)
 *   [x] Add tests
 *   [ ] Add benchmarks
 *   Linear Systems
