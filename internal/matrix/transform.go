@@ -50,6 +50,19 @@ func (m *Matrix) Adj() (*Matrix, error) {
 	}
 	return newMat.T(), nil
 }
+// Swap rows of a matrix
+func (m *Matrix) SwapRows(r1, r2 int) (*Matrix, error) {
+  if r1 < 0 || r1 >= m.Rows || r2 < 0 || r2 >= m.Rows {
+    return nil, fmt.Errorf("Row Swapping: index out of bounds")
+  }
+  for c := 0; c< m.Cols; c++ {
+    temp := m.data[r1][c]
+    m.data[r1][c] = m.data[r2][c]
+    m.data[r2][c] = temp
+  }
+  return m, nil
+} 
+
 
 // Transpose Matrix
 func (m *Matrix) T() *Matrix {

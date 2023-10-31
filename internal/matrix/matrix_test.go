@@ -261,5 +261,19 @@ func TestDiv(t *testing.T) {
 		res.Print()
 		t.Errorf("Matrix Division (2) Failed: %s", err)
 	}
+}
 
+// Row Swapping
+func TestSwapRows(t *testing.T) {
+  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+  ans := NewFromString("7 8 9 ; 4 5 6 ; 1 2 3")
+  _, err := mat.SwapRows(0, 2)
+  if err != nil || !mat.Equals(ans) {
+    t.Errorf("Matrix Row Swapping (1) Failed: %s", err)
+  }
+  // Out of bounds
+  _, err = mat.SwapRows(0, 5)
+  if err == nil {
+    t.Errorf("Matrix Row Swapping (2) Failed: %s", err)
+  }
 }

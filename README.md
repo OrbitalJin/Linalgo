@@ -31,7 +31,8 @@ make build
 *   [x] Adjugate (Requires Cofactors)
 *   [x] Inverse (Requires Determinant)
 *   [x] Division (A/B = A \* B^-1) (Requires Inverse)
-*   [ ] Row Reduction Echelon Form (RREF)
+*   [x] Row Swapping 
+*   [ ] Row Reduction Echelon Form (RREF) (Requires Row Swapping)
 *   [x] Add tests
 *   [ ] Add benchmarks
 *   Linear Systems
