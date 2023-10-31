@@ -56,9 +56,7 @@ func (m *Matrix) SwapRows(r1, r2 int) (*Matrix, error) {
     return nil, fmt.Errorf("Row Swapping: index out of bounds")
   }
   for c := 0; c< m.Cols; c++ {
-    temp := m.data[r1][c]
-    m.data[r1][c] = m.data[r2][c]
-    m.data[r2][c] = temp
+    m.data[r1][c], m.data[r2][c] = m.data[r2][c], m.data[r1][c]
   }
   return m, nil
 } 
