@@ -3,10 +3,13 @@
 Linear algebra library for Go, written in Go
 
 run test suite:
-```bash 
+
+```bash
 make test
 ```
+
 build library:
+
 ```bash
 make build
 ```
@@ -31,9 +34,10 @@ make build
 *   [x] Adjugate (Requires Cofactors)
 *   [x] Inverse (Requires Determinant)
 *   [x] Division (A/B = A \* B^-1) (Requires Inverse)
-*   [x] Row Swapping 
-*   [x] Row Transforation 
-*   [x] Row Reduction Echelon Form (RREF) (Requires Row Swapping)
+*   [x] Row Swapping
+*   [x] Row Transforation
+*   [x] Gaussian Row Reduction Echelon Form (RREF) (Requires Row Swapping)
+*   [x] Gauss-Jordan RREF
 *   [x] Add tests
 *   [ ] Add benchmarks
 *   Linear Systems

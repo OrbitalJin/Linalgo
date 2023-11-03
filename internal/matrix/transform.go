@@ -66,9 +66,9 @@ func (m *Matrix) Adj() (*Matrix, error) {
 	return newMat.T(), nil
 }
 
-// Reduced Row Echelon Form
+// Reduced Row Echelon Form: Gaussian Elimination
 // Performs the operation in place
-func (m *Matrix) RREF() (*Matrix, error) {
+func (m *Matrix) GaussRREF() (*Matrix, error) {
   lead := 0
     for r := 0; r < m.Rows; r++ {
         if lead >= m.Cols{
@@ -100,6 +100,56 @@ func (m *Matrix) RREF() (*Matrix, error) {
     }
   return m, nil
 }
+
+func (m *Matrix) GaussJordanRREF() (*Matrix, error) {
+	lead := 0
+	for r := 0; r < m.Rows; r++ {
+			if lead >= m.Cols {
+					return m, nil
+			}
+			i := r
+			for m.data[i][lead] == 0 {
+					i++
+					if i == m.Rows {
+							i = r
+							lead++
+							if lead == m.Cols {
+									return m, nil
+							}
+					}
+			}
+			m.SwapRows(i, r)
+			f := 1 / m.data[r][lead]
+			m.ScaleRowBy(r, f)
+			for i = 0; i < m.Rows; i++ {
+					if i != r {
+							f = m.data[i][lead]
+							for j, e := range m.data[r] {
+									m.data[i][j] -= e * f
+							}
+					}
+			}
+			lead++
+	}
+
+	// Normalize pivot elements to 1
+	for r := 0; r < m.Rows; r++ {
+			leadCol := -1
+			for c := 0; c < m.Cols; c++ {
+					if m.data[r][c] != 0 {
+							leadCol = c
+							break
+					}
+			}
+			if leadCol != -1 {
+					f := 1 / m.data[r][leadCol]
+					m.ScaleRowBy(r, f)
+			}
+	}
+
+	return m, nil
+}
+
 
 
 // Swap rows of a matrix
