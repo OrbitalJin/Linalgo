@@ -3,7 +3,7 @@ package system
 import (
 	"testing"
 
-	"github.com/OrbitalJin/Linalgo/internal/matrix"
+	"github.com/OrbitalJin/Linalgo/linalgo/matrix"
 )
 
 // Test Gaussian Row Reduction
