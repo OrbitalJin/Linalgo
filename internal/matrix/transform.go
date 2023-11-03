@@ -7,6 +7,7 @@ import (
 )
 
 // Inverse of a Matrix
+// Returns  pointer to a new matrix
 func (m *Matrix) Inverse() (*Matrix, error) {
 	if !m.IsSquare() {
 		return nil, squareError(m.Shape(), "Inverse")
@@ -26,7 +27,21 @@ func (m *Matrix) Inverse() (*Matrix, error) {
 	return adj.ScaleBy(t.MatrixType(1 / det)), nil
 }
 
+// Augment a matrix
+// Returns a pointer to a new matrix
+func (m *Matrix) Augment(b *Matrix) (*Matrix, error) {
+	if m.Rows != b.Rows {
+		return nil, fmt.Errorf("augmentation: row size mismatch, r1=%d, r2=%d", m.Rows, b.Cols)
+	}
+	augmented := New(m.Rows, m.Cols + b.Cols)
+	for i := 0; i < m.Rows; i++ {
+		augmented.data[i] = append(m.data[i], b.data[i]...)
+	}
+	return augmented, nil
+}
+
 // Adjugate of a Matrix (Matrix of det)
+// Returns a pointer to a new matrix
 func (m *Matrix) Adj() (*Matrix, error) {
 	if !m.IsSquare() {
 		return nil, squareError(m.Shape(), "Adjugate")
@@ -52,6 +67,7 @@ func (m *Matrix) Adj() (*Matrix, error) {
 }
 
 // Reduced Row Echelon Form
+// Performs the operation in place
 func (m *Matrix) RREF() (*Matrix, error) {
   lead := 0
     for r := 0; r < m.Rows; r++ {
@@ -87,15 +103,17 @@ func (m *Matrix) RREF() (*Matrix, error) {
 
 
 // Swap rows of a matrix
+// Performs the operation in place
 func (m *Matrix) SwapRows(r1, r2 int) (*Matrix, error) {
   if r1 < 0 || r1 >= m.Rows || r2 < 0 || r2 >= m.Rows {
-    return nil, fmt.Errorf("Row Swapping: index out of bounds")
+    return nil, fmt.Errorf("row Swapping: index out of bounds")
   }
   m.data[r1], m.data[r2] = m.data[r2], m.data[r1]
   return m, nil
 } 
 
 // Transpose Matrix
+// Returns a pointer to a new matrix
 func (m *Matrix) T() *Matrix {
 	newMat := New(m.Cols, m.Rows)
 	for r := 0; r < m.Rows; r++ {
@@ -111,9 +129,10 @@ func (m *Matrix) T() *Matrix {
 }
 
 // Transform Row
+// Performance the operation in place
 func (m *Matrix) TransformRow(r int, f t.Transformer) (*Matrix, error) {
   if r < 0 || r >= m.Rows {
-    return nil, fmt.Errorf("Row Transformation: index out of bounds")
+    return nil, fmt.Errorf("row Transformation: index out of bounds")
   }
   for c := 0; c < m.Cols; c++ {
     m.data[r][c] = f(m.data[r][c])
@@ -122,6 +141,7 @@ func (m *Matrix) TransformRow(r int, f t.Transformer) (*Matrix, error) {
 }
 
 // Scale Row
+// Performance the operation in place
 func (m *Matrix) ScaleRowBy(r int, s t.MatrixType) (*Matrix, error) {
   _, err := m.TransformRow(r, func(val t.MatrixType) t.MatrixType {
     return val * s
@@ -140,6 +160,7 @@ func (m *Matrix) Negate() *Matrix {
 }
 
 // Scale matrix by value
+// Performance the operation in place
 func (m *Matrix) ScaleBy(s t.MatrixType) *Matrix {
 	m.Transform(func(val t.MatrixType) t.MatrixType {
 		return val * s
@@ -148,6 +169,7 @@ func (m *Matrix) ScaleBy(s t.MatrixType) *Matrix {
 }
 
 // Apply a specific function to every element of the Matrix
+// Performance the operation in place
 func (m *Matrix) Transform(f t.Transformer) *Matrix {
 	for r := 0; r < m.Rows; r++ {
 		for c := 0; c < m.Cols; c++ {

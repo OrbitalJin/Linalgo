@@ -311,3 +311,23 @@ func TestRREF(t *testing.T) {
     mat.Print()
   }
 }
+
+
+// Test Matrix Augmentation
+func TestAugmentation(t *testing.T) {
+	// Base Case
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9");
+	vec := NewFromString("0 ; 0 ; 0")
+	ans := NewFromString("1 2 3 0 ; 4 5 6 0 ; 7 8 9 0")
+	aug, err := mat.Augment(vec)
+	if err != nil || !aug.Equals(ans) {
+		t.Errorf("Matrix Augmentation (1) Failed: %s", err)
+		aug.Print()
+	}
+	// Row size mismatch
+	vec = NewFromString("0 ; 0 ; 0 ; 0")
+	_, err = mat.Augment(vec)
+	if err == nil {
+		t.Errorf("Matrix Augmentation (2) Failed: %s", err)
+	}
+}
