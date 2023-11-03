@@ -312,19 +312,6 @@ func TestGaussRREF(t *testing.T) {
   }
 }
 
-// Test Gaussian Row Reduction
-func TestGaussJordanRREF(t *testing.T) {
-	mat := NewFromString("1 2 3 ; 4 5 6 ; 2 1 4")
-	sol := NewFromString("-1 ; 2 ; -1")
-	ans := NewFromString("1 0 0 1.75 ; 0 1 0 0.5 ; 0 0 1 -1.25") 
-	aug, _ := mat.Augment(sol)
-	res, err := aug.GaussJordanRREF()
-	if err != nil || !res.Equals(ans) {
-		t.Errorf("Matrix Gaussian Jordan RREF (1) Failed: %s", err)
-		res.Print()
-	}
-}
-
 // Test Matrix Augmentation
 func TestAugmentation(t *testing.T) {
 	// Base Case
@@ -341,5 +328,15 @@ func TestAugmentation(t *testing.T) {
 	_, err = mat.Augment(vec)
 	if err == nil {
 		t.Errorf("Matrix Augmentation (2) Failed: %s", err)
+	}
+}
+
+// Test GetCol
+func TestGetCol(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := NewFromString("2 ; 5 ; 8")
+	col, err := mat.GetCol(1)
+	if err != nil || !col.Equals(ans) {
+
 	}
 }

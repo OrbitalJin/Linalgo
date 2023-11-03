@@ -81,15 +81,34 @@ func (m *Matrix) Set(p t.Pos, v t.MatrixType) error {
 }
 
 // Get a specific value of the Matrix
-func (m *Matrix) Get(p t.Pos) (t.MatrixType, error) {
+func (m *Matrix) Get(p t.Pos) t.MatrixType {
 	if !m.InBound(p) {
-		return 0, fmt.Errorf(
+		panic(fmt.Errorf(
 			"illegal access querry of matrix of size %d, %d: %d, %d",
 			m.Rows, m.Cols,
 			p.Row, p.Col,
+		))
+	}
+	return m.data[p.Row][p.Col]
+}
+
+// Get a specific column
+func (m *Matrix) GetCol(c int) (*Matrix, error) {
+	if c >= m.Cols {
+		return nil, fmt.Errorf(
+			"illegal column access querry of matrix of size %d, %d: %d",
+			m.Rows, m.Cols, c,
 		)
 	}
-	return m.data[p.Row][p.Col], nil
+	// To get last row
+	if c == -1 {
+		c = m.Cols - 1
+	}
+	col := New(m.Rows, 1)
+	for i := 0; i < m.Rows; i++ {
+		col.data[i][0] = m.data[i][c]
+	}
+	return col, nil
 }
 
 // Create a new SubMatrix

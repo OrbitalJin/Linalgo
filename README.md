@@ -37,7 +37,7 @@ make build
 *   [x] Row Swapping
 *   [x] Row Transforation
 *   [x] Gaussian Row Reduction Echelon Form (RREF) (Requires Row Swapping)
-*   [x] Gauss-Jordan RREF
+*   [x] Linear Systems
+*   [x] Gauss-Jordan Elimination Solver
 *   [x] Add tests
 *   [ ] Add benchmarks
-*   Linear Systems
