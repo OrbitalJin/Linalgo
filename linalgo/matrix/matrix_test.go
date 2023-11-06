@@ -265,57 +265,57 @@ func TestDiv(t *testing.T) {
 
 // Row Swapping
 func TestSwapRows(t *testing.T) {
-  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-  ans := NewFromString("7 8 9 ; 4 5 6 ; 1 2 3")
-  _, err := mat.SwapRows(0, 2)
-  if err != nil || !mat.Equals(ans) {
-    t.Errorf("Matrix Row Swapping (1) Failed: %s", err)
-  }
-  // Out of bounds
-  _, err = mat.SwapRows(0, 5)
-  if err == nil {
-    t.Errorf("Matrix Row Swapping (2) Failed: %s", err)
-  }
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := NewFromString("7 8 9 ; 4 5 6 ; 1 2 3")
+	_, err := mat.SwapRows(0, 2)
+	if err != nil || !mat.Equals(ans) {
+		t.Errorf("Matrix Row Swapping (1) Failed: %s", err)
+	}
+	// Out of bounds
+	_, err = mat.SwapRows(0, 5)
+	if err == nil {
+		t.Errorf("Matrix Row Swapping (2) Failed: %s", err)
+	}
 }
 
 // Scale Row
 func TestScaleRow(t *testing.T) {
-  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-  ans := NewFromString("2 4 6 ; 4 5 6 ; 7 8 9")
-  _, err := mat.ScaleRowBy(0, 2)
-  if err != nil || !mat.Equals(ans) {
-    t.Errorf("Matrix Row Scaling (1) Failed: %s", err)
-  }
-  // Out of bounds
-  _, err = mat.ScaleRowBy(10, 5)
-  if err == nil {
-    t.Errorf("Matrix Row Scaling (2) Failed: %s", err)
-  }
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := NewFromString("2 4 6 ; 4 5 6 ; 7 8 9")
+	_, err := mat.ScaleRowBy(0, 2)
+	if err != nil || !mat.Equals(ans) {
+		t.Errorf("Matrix Row Scaling (1) Failed: %s", err)
+	}
+	// Out of bounds
+	_, err = mat.ScaleRowBy(10, 5)
+	if err == nil {
+		t.Errorf("Matrix Row Scaling (2) Failed: %s", err)
+	}
 }
 
 // Test Gaussian Row Reduction
 func TestGaussRREF(t *testing.T) {
-  mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
-  ans := NewFromString("1 0 -1 ; 0 1 2 ; 0 0 0")
-  _, err := mat.GaussRREF()
-  if err != nil || !mat.Equals(ans) {
-    t.Errorf("Matrix Gaussian RREF (1) Failed: %s", err)
-    mat.Print()
-  }
-  // 4x4
-  mat = NewFromString("1 2 -1 -4 ; 2 3 -1 -11 ; -2 0 -3 22")
-  ans = NewFromString("1 0 0 -8 ; 0 1 0 1 ; 0 0 1 -2")
-  _, err = mat.GaussRREF()
-  if err != nil || !mat.Equals(ans) {
-    t.Errorf("Matrix Gaussian RREF (2) Failed: %s", err)
-    mat.Print()
-  }
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := NewFromString("1 0 -1 ; 0 1 2 ; 0 0 0")
+	_, err := mat.GaussRREF()
+	if err != nil || !mat.Equals(ans) {
+		t.Errorf("Matrix Gaussian RREF (1) Failed: %s", err)
+		mat.Print()
+	}
+	// 4x4
+	mat = NewFromString("1 2 -1 -4 ; 2 3 -1 -11 ; -2 0 -3 22")
+	ans = NewFromString("1 0 0 -8 ; 0 1 0 1 ; 0 0 1 -2")
+	_, err = mat.GaussRREF()
+	if err != nil || !mat.Equals(ans) {
+		t.Errorf("Matrix Gaussian RREF (2) Failed: %s", err)
+		mat.Print()
+	}
 }
 
 // Test Matrix Augmentation
 func TestAugmentation(t *testing.T) {
 	// Base Case
-	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9");
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	vec := NewFromString("0 ; 0 ; 0")
 	ans := NewFromString("1 2 3 0 ; 4 5 6 0 ; 7 8 9 0")
 	aug, err := mat.Augment(vec)
@@ -337,6 +337,17 @@ func TestGetCol(t *testing.T) {
 	ans := NewFromString("2 ; 5 ; 8")
 	col, err := mat.GetCol(1)
 	if err != nil || !col.Equals(ans) {
+		t.Errorf("Matrix GetCol Failed: %s", err)
+	}
+}
 
+// Test Random Matrix
+func TestRandomMatrix(t *testing.T) {
+	mat1 := NewRandom(3, 3)
+	mat2 := NewRandom(3, 3)
+	if mat1.Equals(mat2) {
+		t.Errorf("Matrix Random Matrix Generation Failed")
+		mat1.Print()
+		mat2.Print()
 	}
 }

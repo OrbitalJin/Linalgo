@@ -3,6 +3,7 @@ package matrix
 import (
 	"fmt"
 	"math"
+	"math/rand"
 	"strconv"
 	"strings"
 
@@ -21,6 +22,22 @@ func New(r, c int) *Matrix {
 	data := make([][]t.MatrixType, r)
 	for i := range data {
 		data[i] = make([]t.MatrixType, c)
+	}
+	return &Matrix{
+		Rows: r,
+		Cols: c,
+		data: data,
+	}
+}
+
+// New Matrix filled with random values
+func NewRandom(r, c int) *Matrix {
+	data := make([][]t.MatrixType, r)
+	for i := range data {
+		data[i] = make([]t.MatrixType, c)
+		for j := 0; j < c; j++ {
+			data[i][j] = t.MatrixType(rand.Float64())
+		}
 	}
 	return &Matrix{
 		Rows: r,
