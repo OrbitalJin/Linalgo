@@ -3,7 +3,7 @@ package system
 import (
 	"testing"
 
-	"github.com/OrbitalJin/Linalgo/linalgo/matrix"
+	"github.com/OrbitalJin/Linalgo/lib/matrix"
 )
 
 // Test Gaussian Row Reduction
@@ -12,7 +12,7 @@ func TestGaussJordanRREF(t *testing.T) {
 	mat := matrix.NewFromString("1 2 3 ; 4 5 6 ; 2 1 4")
 	res := matrix.NewFromString("-1 ; 2 ; -1")
 	// Expected solution vector
-	ans := matrix.NewFromString("1.75 ; 0.5 ; -1.25") 
+	ans := matrix.NewFromString("1.75 ; 0.5 ; -1.25")
 	// System Init
 	sys, err := New(*mat, *res)
 	if err != nil {

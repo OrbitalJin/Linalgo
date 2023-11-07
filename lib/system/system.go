@@ -3,7 +3,7 @@ package system
 import (
 	"fmt"
 
-	"github.com/OrbitalJin/Linalgo/linalgo/matrix"
+	"github.com/OrbitalJin/Linalgo/lib/matrix"
 	t "github.com/OrbitalJin/Linalgo/types"
 )
 
@@ -75,7 +75,7 @@ func (s *System) gaussJordan(augmented *matrix.Matrix) *matrix.Matrix {
 					val := augmented.Get(t.Pos{Row: r, Col: j})
 					augmented.Set(
 						t.Pos{Row: i, Col: j},
-						augmented.Get(t.Pos{Row: i, Col: j}) - val * f)
+						augmented.Get(t.Pos{Row: i, Col: j})-val*f)
 				}
 			}
 		}

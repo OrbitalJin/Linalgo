@@ -155,6 +155,30 @@ func (m *Matrix) SubMatrix(start, end t.Pos) (*Matrix, error) {
 	return sub, nil
 }
 
+// Compare a matrix to a scalar element-wise and returns the max
+func (m *Matrix) CompMax(v t.MatrixType) *Matrix {
+	for i := 0; i < m.Rows; i++ {
+		for j := 0; j < m.Cols; j++ {
+			if v > m.data[i][j] {
+				m.data[i][j] = v
+			}
+		}
+	}
+	return m
+}
+
+// Compare a matrix to a scalar element-wise and returns the min
+func (m *Matrix) CompMin(v t.MatrixType) *Matrix {
+	for i := 0; i < m.Rows; i++ {
+		for j := 0; j < m.Cols; j++ {
+			if v < m.data[i][j] {
+				m.data[i][j] = v
+			}
+		}
+	}
+	return m
+}
+
 // Compute the determinant of the matrix if applicable
 func (m *Matrix) Det() (t.MatrixType, error) {
 	if !m.IsSquare() {

@@ -351,3 +351,25 @@ func TestRandomMatrix(t *testing.T) {
 		mat2.Print()
 	}
 }
+
+// Test CompMax
+func TestCompMax(t *testing.T) {
+	val := types.MatrixType(4)
+	mat := NewFromString("4 0 4 ; 4 0 4 ; 4 0 4")
+	ans := NewFromString("4 4 4 ; 4 4 4 ; 4 4 4")
+	if !mat.CompMax(val).Equals(ans) {
+		t.Error("Matrix CompMax Failed")
+		mat.Print()
+	}
+}
+
+// Test CompMin
+func TestCompMin(t *testing.T) {
+	val := types.MatrixType(4)
+	mat := NewFromString("4 0 4 ; 4 0 4 ; 4 0 4")
+	ans := NewFromString("4 0 4 ; 4 0 4 ; 4 0 4")
+	if !mat.CompMin(val).Equals(ans) {
+		t.Error("Matrix CompMin Failed")
+		mat.Print()
+	}
+}
