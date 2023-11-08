@@ -36,7 +36,8 @@ func NewRandom(r, c int) *Matrix {
 	for i := range data {
 		data[i] = make([]t.MatrixType, c)
 		for j := 0; j < c; j++ {
-			data[i][j] = t.MatrixType(rand.Float64())
+			sign := math.Pow(-1, float64(rand.Intn(2)))
+			data[i][j] = t.MatrixType(sign * rand.Float64())
 		}
 	}
 	return &Matrix{
