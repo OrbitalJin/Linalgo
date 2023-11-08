@@ -33,7 +33,7 @@ func (m *Matrix) Augment(b *Matrix) (*Matrix, error) {
 	if m.Rows != b.Rows {
 		return nil, fmt.Errorf("augmentation: row size mismatch, r1=%d, r2=%d", m.Rows, b.Rows)
 	}
-	augmented := New(m.Rows, m.Cols + b.Cols)
+	augmented := New(m.Rows, m.Cols+b.Cols)
 	for i := 0; i < m.Rows; i++ {
 		augmented.data[i] = append(m.data[i], b.data[i]...)
 	}
@@ -69,47 +69,47 @@ func (m *Matrix) Adj() (*Matrix, error) {
 // Reduced Row Echelon Form: Gaussian Elimination
 // Performs the operation in place
 func (m *Matrix) GaussRREF() (*Matrix, error) {
-  lead := 0
-    for r := 0; r < m.Rows; r++ {
-        if lead >= m.Cols{
-            return m, nil
-        }
-        i := r
-        for m.data[i][lead] == 0 {
-            i++
-            if i == m.Rows {
-                i = r
-                lead++
-                if lead == m.Cols {
-                    return m, nil
-                }
-            }
-        }
-        m.SwapRows(i, r)
-        f := 1 / m.data[r][lead]
-        m.ScaleRowBy(r, f)
-        for i = 0; i < m.Rows; i++ {
-            if i != r {
-                f = m.data[i][lead]
-                for j, e := range m.data[r] {
-                    m.data[i][j] -= e * f
-                }
-            }
-        }
-        lead++
-    }
-  return m, nil
+	lead := 0
+	for r := 0; r < m.Rows; r++ {
+		if lead >= m.Cols {
+			return m, nil
+		}
+		i := r
+		for m.data[i][lead] == 0 {
+			i++
+			if i == m.Rows {
+				i = r
+				lead++
+				if lead == m.Cols {
+					return m, nil
+				}
+			}
+		}
+		m.SwapRows(i, r)
+		f := 1 / m.data[r][lead]
+		m.ScaleRowBy(r, f)
+		for i = 0; i < m.Rows; i++ {
+			if i != r {
+				f = m.data[i][lead]
+				for j, e := range m.data[r] {
+					m.data[i][j] -= e * f
+				}
+			}
+		}
+		lead++
+	}
+	return m, nil
 }
 
 // Swap rows of a matrix
 // Performs the operation in place
 func (m *Matrix) SwapRows(r1, r2 int) (*Matrix, error) {
-  if r1 < 0 || r1 >= m.Rows || r2 < 0 || r2 >= m.Rows {
-    return nil, fmt.Errorf("row Swapping: index out of bounds")
-  }
-  m.data[r1], m.data[r2] = m.data[r2], m.data[r1]
-  return m, nil
-} 
+	if r1 < 0 || r1 >= m.Rows || r2 < 0 || r2 >= m.Rows {
+		return nil, fmt.Errorf("row Swapping: index out of bounds")
+	}
+	m.data[r1], m.data[r2] = m.data[r2], m.data[r1]
+	return m, nil
+}
 
 // Transpose Matrix
 // Returns a pointer to a new matrix
@@ -128,28 +128,38 @@ func (m *Matrix) T() *Matrix {
 }
 
 // Transform Row
-// Performance the operation in place
+// Performs the operation in place
 func (m *Matrix) TransformRow(r int, f t.Transformer) (*Matrix, error) {
-  if r < 0 || r >= m.Rows {
-    return nil, fmt.Errorf("row Transformation: index out of bounds")
-  }
-  for c := 0; c < m.Cols; c++ {
-    m.data[r][c] = f(m.data[r][c])
-  }
-  return m, nil
+	if r < 0 || r >= m.Rows {
+		return nil, fmt.Errorf("row Transformation: index out of bounds")
+	}
+	for c := 0; c < m.Cols; c++ {
+		m.data[r][c] = f(m.data[r][c])
+	}
+	return m, nil
+}
+
+// Increment all elements by value
+// Performs the operation in place
+func (m *Matrix) IncrementBy(v t.MatrixType) *Matrix {
+	m.Transform(func(elem t.MatrixType) t.MatrixType {
+		return elem + v
+	})
+	return m
 }
 
 // Scale Row
-// Performance the operation in place
+// Performs the operation in place
 func (m *Matrix) ScaleRowBy(r int, s t.MatrixType) (*Matrix, error) {
-  _, err := m.TransformRow(r, func(val t.MatrixType) t.MatrixType {
-    return val * s
-  })
-  if err != nil {
-    return nil, err
-  }
-  return m, nil
+	_, err := m.TransformRow(r, func(val t.MatrixType) t.MatrixType {
+		return val * s
+	})
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
 }
+
 // Negate a matrix
 func (m *Matrix) Negate() *Matrix {
 	m.Transform(func(val t.MatrixType) t.MatrixType {
@@ -159,7 +169,7 @@ func (m *Matrix) Negate() *Matrix {
 }
 
 // Scale matrix by value
-// Performance the operation in place
+// Performs the operation in place
 func (m *Matrix) ScaleBy(s t.MatrixType) *Matrix {
 	m.Transform(func(val t.MatrixType) t.MatrixType {
 		return val * s
@@ -168,7 +178,7 @@ func (m *Matrix) ScaleBy(s t.MatrixType) *Matrix {
 }
 
 // Apply a specific function to every element of the Matrix
-// Performance the operation in place
+// Performs the operation in place
 func (m *Matrix) Transform(f t.Transformer) *Matrix {
 	for r := 0; r < m.Rows; r++ {
 		for c := 0; c < m.Cols; c++ {

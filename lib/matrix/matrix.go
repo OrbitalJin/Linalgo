@@ -128,6 +128,32 @@ func (m *Matrix) GetCol(c int) (*Matrix, error) {
 	return col, nil
 }
 
+// Get Maximum value
+func (m *Matrix) Max() t.MatrixType {
+	max := m.data[0][0]
+	for r := 0; r < m.Rows; r++ {
+		for c := 0; c < m.Cols; c++ {
+			if m.data[r][c] > max {
+				max = m.data[r][c]
+			}
+		}
+	}
+	return max
+}
+
+// Get Minimum value
+func (m *Matrix) Min() t.MatrixType {
+	min := m.data[0][0]
+	for r := 0; r < m.Rows; r++ {
+		for c := 0; c < m.Cols; c++ {
+			if m.data[r][c] < min {
+				min = m.data[r][c]
+			}
+		}
+	}
+	return min
+}
+
 // Create a new SubMatrix
 func (m *Matrix) SubMatrix(start, end t.Pos) (*Matrix, error) {
 	if !m.InBound(start) {

@@ -7,6 +7,41 @@ import (
 	"github.com/OrbitalJin/Linalgo/types"
 )
 
+func TestMax(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := types.MatrixType(9)
+	if mat.Max() != ans {
+		t.Errorf("Matrix max failed, expected %f, got %f", ans, mat.Max())
+	}
+}
+
+func TestMin(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := types.MatrixType(1)
+	if mat.Min() != ans {
+		t.Errorf("Matrix min failed, expected %f, got %f", ans, mat.Max())
+	}
+}
+
+func TestIncrementation(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	increment := 1
+	ans := NewFromString("2 3 4 ; 5 6 7; 8 9 10")
+	mat.IncrementBy(types.MatrixType(increment))
+	if !mat.Equals(ans) {
+		t.Error("Matrix incrementation (1) Failed")
+		mat.Print()
+	}
+	mat = NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	increment = -1
+	ans = NewFromString("0 1 2 ; 3 4 5 ; 6 7 8")
+	mat.IncrementBy(types.MatrixType(increment))
+	if !mat.Equals(ans) {
+		t.Error("Matrix incrementation (2) Failed")
+		mat.Print()
+	}
+}
+
 func TestAdd(t *testing.T) {
 	mat1 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	mat2 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
