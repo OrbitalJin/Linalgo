@@ -179,6 +179,17 @@ func (m *Matrix) CompMin(v t.MatrixType) *Matrix {
 	return m
 }
 
+// Get the sum of all of the elemtents of the matrix
+func (m *Matrix) Sum() t.MatrixType {
+	var total t.MatrixType
+	for r := 0; r < m.Rows; r++ {
+		for c := 0; c < m.Cols; c++ {
+			total += m.data[r][c]
+		}
+	}
+	return total
+}
+
 // Compute the determinant of the matrix if applicable
 func (m *Matrix) Det() (t.MatrixType, error) {
 	if !m.IsSquare() {

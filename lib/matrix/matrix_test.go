@@ -7,13 +7,21 @@ import (
 	"github.com/OrbitalJin/Linalgo/types"
 )
 
-func TestSum(t *testing.T) {
+func TestAdd(t *testing.T) {
 	mat1 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	mat2 := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	ans := NewFromString("2 4 6 ; 8 10 12 ; 14 16 18")
 	mat1.Add(mat2)
 	if !mat1.Equals(ans) {
 		t.Errorf("Matrix addition failed")
+	}
+}
+
+func TestSumElements(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	ans := types.MatrixType(45)
+	if mat.Sum() != ans {
+		t.Errorf("Matrix sum failed, expected %f, got %f", ans, mat.Sum())
 	}
 }
 
