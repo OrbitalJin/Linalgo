@@ -95,6 +95,16 @@ func TestClipping(t *testing.T) {
 	}
 }
 
+func TestElementWiseMul(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9");
+	ans := NewFromString("1 4 9 ; 16 25 36 ; 49 64 81")
+	err := mat.Mul(mat)
+	if err != nil || !mat.Equals(ans) {
+		t.Errorf("Matrix element-wise multiplication failed, got:")
+		mat.Print()
+	}
+}
+
 func TestScaleBy(t *testing.T) {
 	var scalar types.MatrixType = -2.0
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")

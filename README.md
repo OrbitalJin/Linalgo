@@ -42,5 +42,6 @@ make build
 *   [x] Random Matrix
 *   [x] Clip
 *   [x] Mean
+*   [x] Mul - Element wise product
 *   [x] Add tests
 *   [ ] Add benchmarks

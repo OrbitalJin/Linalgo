@@ -62,6 +62,23 @@ func (m *Matrix) Dot(b *Matrix) (*Matrix, error) {
 	return result, nil
 }
 
+// Element-wise product
+func (m *Matrix) Mul(b *Matrix) error {
+	if !m.OfSize(b) {
+		return fmt.Errorf(
+			"size mismatch, cannot apply element-wise multiplication between matrix %d, %d and matrix %d, %d",
+			b.Rows, b.Cols,
+			m.Rows, m.Cols,
+		)
+	}
+	for r := 0; r < m.Rows; r++ {
+		for c:= 0; c < m.Cols; c++ {
+			m.data[r][c] *= b.data[r][c]
+		}
+	}
+	return nil
+}
+
 // Matrix `Division` A/B => A.dot(B.Inv())
 func (m *Matrix) Div(b *Matrix) (*Matrix, error) {
 	// B must be square, that case is handled inside inv
