@@ -142,6 +142,11 @@ func (m *Matrix) Max() t.MatrixType {
 	return max
 }
 
+// Get the Mean
+func (m *Matrix) Mean() float64 {
+	return float64(m.Sum())/(float64(m.Rows)*float64(m.Cols))
+}
+
 // Get Minimum value
 func (m *Matrix) Min() t.MatrixType {
 	min := m.data[0][0]

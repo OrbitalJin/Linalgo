@@ -40,5 +40,7 @@ make build
 *   [x] Linear Systems
 *   [x] Gauss-Jordan Elimination Solver
 *   [x] Random Matrix
+*   [x] Clip
+*   [x] Mean
 *   [x] Add tests
 *   [ ] Add benchmarks

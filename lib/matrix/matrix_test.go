@@ -23,6 +23,20 @@ func TestMin(t *testing.T) {
 	}
 }
 
+func TestMean(t *testing.T) {
+	mat := NewFromString("1 2 3 4");
+	ans := 2.5
+	if mat.Mean() != ans {
+		t.Errorf("Matrix mean (1) failed, expected %f, got %f", ans, mat.Mean())
+	}
+	mat = NewFromString("1 2 ; 3 4");
+	ans = 2.5
+	if mat.Mean() != ans {
+		t.Errorf("Matrix mean (2) failed, expected %f, got %f", ans, mat.Mean())
+	}
+
+}
+
 func TestIncrementation(t *testing.T) {
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
 	increment := 1
@@ -67,6 +81,17 @@ func TestSub(t *testing.T) {
 	mat1.Sub(mat2)
 	if !mat1.Equals(ans) {
 		t.Errorf("Matrix Substraction failed")
+	}
+}
+
+func TestClipping(t *testing.T) {
+	var low, up types.MatrixType =  0, 10
+	mat := NewFromString("-1 -2 -3 ; 5 6 4 ; 23 45 234")
+	ans := NewFromString("0 0 0 ; 5 6 4 ; 10 10 10")
+	mat.Clip(low, up)
+	if !mat.Equals(ans) {
+		t.Error("Matrix clipping failed, got: ")
+		mat.Print()
 	}
 }
 
