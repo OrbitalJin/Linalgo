@@ -43,5 +43,6 @@ make build
 *   [x] Clip
 *   [x] Mean
 *   [x] Mul - Element wise product
+*   [x] Masking (one hot encoding)
 *   [x] Add tests
 *   [ ] Add benchmarks

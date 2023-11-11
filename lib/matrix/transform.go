@@ -169,6 +169,27 @@ func (m *Matrix) Clip(low, up t.MatrixType) *Matrix {
 	return m
 }
 
+// Mask a matrix using another one (one hot encoded)
+// Returns a pointer to a new matrix
+func (m *Matrix) Mask(mask *Matrix) (*Matrix, error) {
+	if !m.OfSize(mask) {
+		return nil, fmt.Errorf(
+			"size mismatch, cannot mask matrix %d, %d with matrix %d, %d",
+			m.Rows, m.Cols,
+			mask.Rows, mask.Cols,
+		)
+	}
+	masked := New(m.Rows, 1)
+	for r := 0; r < m.Rows; r++ {
+		for c := 0; c < m.Cols; c++ {
+			if mask.data[r][c] == 1 {
+				masked.data[r][0] = m.data[r][c]
+			}
+		}
+	}
+	return masked, nil
+}
+
 // Swap rows of a matrix
 // Performs the operation in place
 func (m *Matrix) SwapRows(r1, r2 int) (*Matrix, error) {

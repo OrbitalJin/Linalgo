@@ -95,6 +95,17 @@ func TestClipping(t *testing.T) {
 	}
 }
 
+func TestMasking(t *testing.T) {
+	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9")
+	mask := NewFromString("1 0 0 ; 0 1 0 ; 0 0 1")
+	ans := NewFromString("1 ; 5 ; 9")
+	masked, err := mat.Mask(mask)
+	if err != nil || !masked.Equals(ans) {
+		t.Errorf("Matrix masking (1) failed: %s", err)
+		masked.Print()
+	}
+}
+
 func TestElementWiseMul(t *testing.T) {
 	mat := NewFromString("1 2 3 ; 4 5 6 ; 7 8 9");
 	ans := NewFromString("1 4 9 ; 16 25 36 ; 49 64 81")
