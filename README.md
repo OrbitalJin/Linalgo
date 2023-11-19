@@ -45,4 +45,5 @@ make build
 *   [x] Mul - Element wise product
 *   [x] Masking (one hot encoding)
 *   [x] Add tests
+*   [x] Add vectors
 *   [ ] Add benchmarks
