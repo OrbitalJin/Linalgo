@@ -304,6 +304,11 @@ func (m *Matrix) Equals(b *Matrix) bool {
 	return true
 }
 
+// Get Raw data of the matrix
+func (m *Matrix) Raw() *[][]t.MatrixType {
+	return &m.data
+}
+
 // Print the content of the matrix
 func (m *Matrix) Print() {
 	fmt.Print("* ")
