@@ -78,7 +78,7 @@ func (v *Vector) Max() t.MatrixType {
 // Get the cumulative sum of the vector
 func (v *Vector) Sum() t.MatrixType {
 	var sum t.MatrixType
-	for i := 1; i < v.size; i++ {
+	for i := 0; i < v.size; i++ {
 		sum += v.data[i]
 	}
 	return sum
